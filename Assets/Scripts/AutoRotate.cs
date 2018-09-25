@@ -9,11 +9,11 @@ public class AutoRotate : MonoBehaviour {
     float speed;
 	void Start () {
         axis = BackgroundObjectManager.Instance.GetRandomPosition().normalized;
-        speed = Random.Range(-0.1f, 0.1f);
+        speed = Random.Range(-1f, 1f);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Rotate(axis, speed);
+        transform.Rotate(axis, speed * Time.deltaTime);
 	}
 }
