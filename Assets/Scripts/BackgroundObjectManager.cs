@@ -22,12 +22,19 @@ public class BackgroundObjectManager : MonoBehaviour {
     [Space]
     public Camera Camera;
 
-    public Vector3 GetRandomPosition(){
-        return new Vector3(
-            Random.Range(0, AreaSize),
-            Random.Range(0, AreaSize),
-            Random.Range(0, AreaSize));
+    public Vector3 GetRandomPosition()
+    {
+        return GetRandomPosition(0, AreaSize);
     }
+
+    public Vector3 GetRandomPosition(float min, float max)
+    {
+        return new Vector3(
+            Random.Range(min, max),
+            Random.Range(min, max),
+            Random.Range(min, max));
+    }
+
 
     public Vector3 GetRandomSize(Vector2 fromTo){
         float size = Random.Range(fromTo.x, fromTo.y);
@@ -50,17 +57,20 @@ public class BackgroundObjectManager : MonoBehaviour {
             starCluster.transform.localRotation
                        .SetLookRotation(GetRandomPosition().normalized);
 
-            var pos = GetRandomPosition();
             starCluster.transform.parent = StarClustersParent;
-            starCluster.transform.localPosition = pos;
+            starCluster.transform.localPosition = GetRandomPosition();
             starCluster.transform.localScale = GetRandomSize(StarClusterSize);
         }
 
 
         for (int i = 0; i < PlanetsCount; i ++){
             int index = Random.Range(0, Planets.Length);
-            var planet = Planets[i];
+            var planet = Instantiate(Planets[index]);
+            planet.AddComponent<AutoRotate>();
             planet.transform.parent = PlanetsParent;
+            planet.transform.localPosition = 
+                GetRandomPosition(AreaSize / 3f, AreaSize / 4f * 3f);
+            planet.transform.localScale = GetRandomSize(PlanetSize);
         }
 		
 	}
