@@ -89,33 +89,6 @@ public class BackgroundObjectManager : MonoBehaviour {
     // Update is called once per frame
     float camVelocity = 0;
 	void Update () {
-        stepTime += Time.deltaTime;
-        if(stepTime > 20)
-        {
-            stepTime -= 20;
-
-            followPosition = (planetsList[followPlanetIndex] as GameObject).transform.position;
-            followPosition += (Camera.transform.position - followPosition).normalized * 5;
-
-            followPlanetIndex++;
-            if (followPlanetIndex >= planetsList.Count) followPlanetIndex = 0;
-        }
-
-        
-            
-        if ((followPosition - Camera.transform.position).magnitude > 
-            (1 > camVelocity * Time.deltaTime ? 1 : camVelocity * Time.deltaTime))
-        {
-            camVelocity += Time.deltaTime * 30;
-        } else {
-            camVelocity = 0;
-            Camera.transform.position = followPosition;
-        }
-
-        if (camVelocity < 0) camVelocity = 0;
-        if (camVelocity > 50) camVelocity = 50;
-
-        Camera.transform.position += (followPosition - Camera.transform.position).normalized * camVelocity * Time.deltaTime;
 
     }
 }
